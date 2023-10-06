@@ -15,8 +15,13 @@ class DrawingApp {
 
     #initEvents(){
         //mouse methods
-
+        this.canvas.addEventListener('mousedown', () => this.#startPosition());
+        this.canvas.addEventListener('mouseup', this.#endPosition.bind(this));
+        this.canvas.addEventListener('mousemove', this.#draw.bind(this));
         //touch methods
+        this.canvas.addEventListener('touchstart', () => this.#startPosition());
+        this.canvas.addEventListener('touchend', this.#endPosition.bind(this));
+        this.canvas.addEventListener('touchmove', this.#draw.bind(this));
     }
 
     #startPosition(){
@@ -29,7 +34,9 @@ class DrawingApp {
     }
 
     #draw(){
-
+        if(this.painting){
+            console.log('drawing');
+        }
     }
 
     changeColor(color){
