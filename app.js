@@ -11,32 +11,42 @@ class DrawingApp {
         this.canvas.height = window.innerHeight;
         this.ctx = this.canvas.getContext('2d');
         this.ctx.strokeStyle = 'white';
+        this.ctx.lineWidth = 5;
+        this.ctx.lineCap = 'round';
     }
 
     #initEvents(){
         //mouse methods
-        this.canvas.addEventListener('mousedown', () => this.#startPosition());
+        this.canvas.addEventListener('mousedown', (e) => this.#startPosition(e));
         this.canvas.addEventListener('mouseup', this.#endPosition.bind(this));
         this.canvas.addEventListener('mousemove', this.#draw.bind(this));
         //touch methods
-        this.canvas.addEventListener('touchstart', () => this.#startPosition());
+        this.canvas.addEventListener('touchstart', (e) => this.#startPosition(e));
         this.canvas.addEventListener('touchend', this.#endPosition.bind(this));
         this.canvas.addEventListener('touchmove', this.#draw.bind(this));
     }
 
-    #startPosition(){
+    #startPosition(e){
         this.painting = !this.painting;
-        this.#draw();
+        this.#draw(e);
     }
 
     #endPosition(){
         this.painting = !this.painting;
+        this.ctx.beginPath();
     }
 
-    #draw(){
-        if(this.painting){
-            console.log('drawing');
-        }
+    #draw(e){
+        if(!this.painting) return;
+
+        
+        let x = e.clientX || e.touches[0].clientX;
+        let y = e.clientY || e.touches[0].clientY;
+
+        this.ctx.lineTo(x,y);
+        this.ctx.stroke();
+       
+        this.ctx.moveTo(x,y);
     }
 
     changeColor(color){
