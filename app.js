@@ -52,6 +52,10 @@ class DrawingApp {
     changeColor(color){
         this.ctx.strokeStyle = color;
     }
+
+    reset(){
+        this.#init();
+    }
 }
 
 const app = new DrawingApp();
